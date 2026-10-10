@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 namespace Calculator
@@ -7,13 +8,20 @@ namespace Calculator
     {
         public static double Calculate(string expression)
         {
-            var Parts = new List<string>(); 
-            var buffer = "";
+            List<string> Parts = []; 
+            string buffer = "";
             foreach (var c in expression)
             {
-                if (c is '+' or '-')
+                if (char.IsWhiteSpace(c))
                 {
-                    Parts.Add(buffer);
+                    continue; // Skip whitespace
+                }
+                else if (c is '+' or '-')
+                {
+                    if (buffer.Length > 0)
+                    {
+                        Parts.Add(buffer);
+                    }
                     buffer = c.ToString();
                 }
                 else
@@ -22,7 +30,22 @@ namespace Calculator
                 }
             }
             Parts.Add(buffer); // Add the last part
-            return 0; // Placeholder return statement
+            double result = Add(Parts);
+            return result; // Placeholder return statement
+        }
+        private static double Add(List<string> parts)
+        {
+            double sum = 0;
+            foreach (var i in parts)
+            {
+                if (!double.TryParse(i, out double number))
+                {
+                    throw new FormatException($"なんだよこれ: {i}");
+                }
+
+                sum += number;
+            }
+            return sum;
         }
     }
 }

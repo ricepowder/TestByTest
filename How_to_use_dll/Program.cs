@@ -1,25 +1,21 @@
 ﻿using Calculator;
 
-namespace How_to_use_dll
+while (true)
 {
-    class Program
+    Console.Write("Calc> ");
+    string expression = Console.ReadLine() ?? "";
+    if (expression.Equals("exit", StringComparison.OrdinalIgnoreCase))
     {
-        static int Main(string[] args)
-        {
-            while (true)
-            {
-                string expression = Console.ReadLine() ?? "";
-                if (expression.Equals("exit", StringComparison.OrdinalIgnoreCase))
-                {
-                    break;
-                }
-                double result = Calc.Calculate(expression);
-                Console.WriteLine(result);
-                continue; //意図的だから何も言うな
-            }
-            return 0;
-        }
+        break;
     }
+    try
+    {
+        double result = Calc.Calculate(expression);
+        Console.WriteLine(result);
+    }
+    catch (FormatException ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    continue; //意図的だから何も言うな
 }
-
-
