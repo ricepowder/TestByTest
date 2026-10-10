@@ -1,17 +1,25 @@
-﻿using Calclator;
+﻿using Calculator;
 
-while (true)
+namespace How_to_use_dll
 {
-    string expression = Console.ReadLine() ?? "";
-    if (expression == "exit")
-        break;
-
-    double result = expression switch
+    class Program
     {
-        var s when s.Contains('+') => Calc.Add(s),
-        var s when s.Contains('-') => Calc.Dif(s),
-        _ => throw new ArgumentException("それ数式？"),
-    };
-
-    Console.WriteLine(result);
+        static int Main(string[] args)
+        {
+            while (true)
+            {
+                string expression = Console.ReadLine() ?? "";
+                if (expression.Equals("exit", StringComparison.OrdinalIgnoreCase))
+                {
+                    break;
+                }
+                double result = Calc.Calculate(expression);
+                Console.WriteLine(result);
+                continue; //意図的だから何も言うな
+            }
+            return 0;
+        }
+    }
 }
+
+

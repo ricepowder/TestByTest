@@ -1,28 +1,28 @@
 ﻿using System.ComponentModel;
 using System.Linq.Expressions;
 
-namespace Calclator
+namespace Calculator
 {
     public class Calc
     {
-        public static double Add(string expression)
+        public static double Calculate(string expression)
         {
-            string[] parts = expression.Split('+');
-
-            double a = double.Parse(parts[0]);
-            double b = double.Parse(parts[1]);
-
-            return a + b;
-        }
-
-        public static double Dif(string expression)
-        {
-            string[] parts = expression.Split('-');
-
-            double a = double.Parse(parts[0]);
-            double b = double.Parse(parts[1]);
-
-            return a - b;
+            var Parts = new List<string>(); 
+            var buffer = "";
+            foreach (var c in expression)
+            {
+                if (c is '+' or '-')
+                {
+                    Parts.Add(buffer);
+                    buffer = c.ToString();
+                }
+                else
+                {
+                    buffer += c;
+                }
+            }
+            Parts.Add(buffer); // Add the last part
+            return 0; // Placeholder return statement
         }
     }
 }
